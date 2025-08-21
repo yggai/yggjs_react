@@ -47,20 +47,20 @@ npx yggjs_react create my-app
 
 ```bash
 # 交互式创建
-yggjs-react create
+yggjs_react create
 
 # 指定项目名称
-yggjs-react create my-react-app
+yggjs_react create my-react-app
 
-# 指定模板
-yggjs-react create my-react-app --template basic
+# 使用短命令
+ggr create my-react-app
 ```
 
 ### 2. 安装依赖
 
 ```bash
 cd my-react-app
-pnpm install --registry=https://registry.npmmirror.com
+pnpm install
 ```
 
 ### 3. 启动开发服务器
@@ -74,6 +74,14 @@ pnpm dev
 ```bash
 pnpm build
 ```
+
+## 📚 文档
+
+- 📖 [快速开始指南](./docs/快速开始.md) - 5分钟快速上手
+- 📋 [完整使用教程](./docs/使用教程/v1.0.0/yggjs_react使用教程.md) - 详细的使用指南
+- 🏗️ [目录结构说明](./docs/目录结构说明.md) - 项目结构和组织原则
+- 🚀 [项目实战](./docs/使用教程/v1.0.0/yggjs_react使用教程.md#项目实战) - 完整的实战项目示例
+- 📚 [文档中心](./docs/README.md) - 所有文档的导航入口
 
 ## 📚 CLI命令
 
@@ -94,13 +102,16 @@ yggjs-react create [project-name] [options]
 **示例:**
 ```bash
 # 交互式创建
-yggjs-react create
+yggjs_react create
 
 # 创建名为"my-app"的项目
-yggjs-react create my-app
+yggjs_react create my-app
 
 # 使用basic模板创建项目
-yggjs-react create my-app --template basic
+yggjs_react create my-app --template basic
+
+# 使用短命令
+ggr create my-app
 ```
 
 ### list
@@ -108,7 +119,9 @@ yggjs-react create my-app --template basic
 列出所有可用的模板
 
 ```bash
-yggjs-react list
+yggjs_react list
+# 或使用短命令
+ggr list
 ```
 
 ## 🏗️ 项目结构
@@ -117,19 +130,28 @@ yggjs-react list
 
 ```
 my-react-app/
-├── public/
-├── src/
-│   ├── store/
-│   │   └── counter.ts          # Zustand状态管理
-│   ├── App.tsx                 # 主应用组件
-│   ├── App.css                 # 应用样式
-│   ├── main.tsx                # 应用入口
-│   └── index.css               # 全局样式
+├── .npmrc                      # pnpm配置文件
 ├── index.html                  # HTML模板
 ├── package.json                # 项目配置
 ├── tsconfig.json               # TypeScript配置
 ├── tsconfig.node.json          # Node.js TypeScript配置
-└── vite.config.ts              # Vite配置
+├── vite.config.ts              # Vite配置
+└── src/
+    ├── components/             # 通用组件
+    │   ├── Layout.tsx          # 布局组件
+    │   └── index.ts            # 组件导出
+    ├── pages/                  # 页面组件
+    │   ├── Home.tsx            # 主页组件
+    │   ├── About.tsx           # 关于页面
+    │   └── index.ts            # 页面导出
+    ├── routers/                # 路由配置
+    │   └── index.tsx           # 路由配置文件
+    ├── store/                  # 状态管理
+    │   └── counter.ts          # Zustand状态管理
+    ├── App.tsx                 # 主应用组件
+    ├── App.css                 # 应用样式
+    ├── main.tsx                # 应用入口
+    └── index.css               # 全局样式
 ```
 
 ## 🎨 功能特性
@@ -157,24 +179,33 @@ export const useCounterStore = create<CounterState>((set) => ({
 
 ### 路由系统 (React Router)
 
-预配置的React Router v6路由系统：
+预配置的React Router v6路由系统，采用模块化设计：
 
 ```typescript
-// src/App.tsx
-import { Routes, Route, Link } from 'react-router-dom'
+// src/routers/index.tsx
+import { Routes, Route } from 'react-router-dom'
+import { Home, About } from '../pages'
 
-function App() {
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+    </Routes>
+  )
+}
+
+// src/components/Layout.tsx
+import { Link } from 'react-router-dom'
+
+function Layout({ children }) {
   return (
     <div className="App">
       <nav>
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
       </nav>
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
+      <main>{children}</main>
     </div>
   )
 }
@@ -184,11 +215,12 @@ function App() {
 
 ### 添加新页面
 
-1. 在`src`目录下创建新的组件文件
-2. 在`App.tsx`中添加新的路由
+1. 在`src/pages`目录下创建新的页面组件
+2. 在`src/pages/index.ts`中导出新页面
+3. 在`src/routers/index.tsx`中添加新的路由
 
 ```typescript
-// src/pages/Contact.tsx
+// 1. 创建页面组件 src/pages/Contact.tsx
 export default function Contact() {
   return (
     <div>
@@ -198,11 +230,24 @@ export default function Contact() {
   )
 }
 
-// src/App.tsx
-import Contact from './pages/Contact'
+// 2. 导出页面 src/pages/index.ts
+export { default as Home } from './Home'
+export { default as About } from './About'
+export { default as Contact } from './Contact'
 
-// 在Routes中添加新路由
-<Route path="/contact" element={<Contact />} />
+// 3. 添加路由 src/routers/index.tsx
+import { Routes, Route } from 'react-router-dom'
+import { Home, About, Contact } from '../pages'
+
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+    </Routes>
+  )
+}
 ```
 
 ### 状态管理最佳实践
