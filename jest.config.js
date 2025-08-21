@@ -2,7 +2,7 @@
   preset: "ts-jest",
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
-  moduleNameMapping: {
+  moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/",
     "\\.(css|less|scss|sass)$": "identity-obj-proxy"
   },
