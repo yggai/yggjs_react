@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "packageManager": "pnpm@8.15.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -26,5 +27,8 @@
     "eslint-plugin-react-refresh": "^0.4.14",
     "typescript": "^5.9.2",
     "vite": "^4.5.14"
+  },
+  "pnpm": {
+    "registry": "https://registry.npmmirror.com"
   }
 }
