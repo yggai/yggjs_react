@@ -18,7 +18,16 @@ describe('basicTemplate', () => {
       'src/App.tsx',
       'src/store/counter.ts',
       'src/index.css',
-      'src/App.css'
+      'src/App.css',
+      // 页面组件
+      'src/pages/Home.tsx',
+      'src/pages/About.tsx',
+      'src/pages/index.ts',
+      // 路由配置
+      'src/routers/index.tsx',
+      // 布局组件
+      'src/components/Layout.tsx',
+      'src/components/index.ts'
     ];
 
     const actualFiles = basicTemplate.files.map(file => file.path);

@@ -84,13 +84,13 @@ describe('basicTemplate', () => {
     expect(mainFile!.content).toContain('BrowserRouter');
   });
 
-  it('should have valid App component with routing', () => {
+  it('should have valid App component with new structure', () => {
     const appFile = basicTemplate.files.find(file => file.path === 'src/App.tsx');
     expect(appFile).toBeDefined();
-    expect(appFile!.content).toContain('Routes');
-    expect(appFile!.content).toContain('Route');
-    expect(appFile!.content).toContain('Link');
-    expect(appFile!.content).toContain('useCounterStore');
+    expect(appFile!.content).toContain('Layout');
+    expect(appFile!.content).toContain('AppRoutes');
+    expect(appFile!.content).toContain("import { Layout } from './components'");
+    expect(appFile!.content).toContain("import AppRoutes from './routers'");
   });
 
   it('should have valid Zustand store', () => {

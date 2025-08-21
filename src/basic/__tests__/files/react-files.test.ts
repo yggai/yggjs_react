@@ -36,26 +36,29 @@ describe('appTsxTemplate', () => {
     expect(appTsxTemplate.path).toBe('src/App.tsx');
   });
 
-  it('should import routing components', () => {
-    expect(appTsxTemplate.content).toContain("import { Routes, Route, Link } from 'react-router-dom'");
+  it('should import Layout component', () => {
+    expect(appTsxTemplate.content).toContain("import { Layout } from './components'");
   });
 
-  it('should import counter store', () => {
-    expect(appTsxTemplate.content).toContain("import { useCounterStore } from './store/counter'");
+  it('should import AppRoutes', () => {
+    expect(appTsxTemplate.content).toContain("import AppRoutes from './routers'");
   });
 
-  it('should have navigation links', () => {
-    expect(appTsxTemplate.content).toContain('<Link to="/">Home</Link>');
-    expect(appTsxTemplate.content).toContain('<Link to="/about">About</Link>');
+  it('should import App.css', () => {
+    expect(appTsxTemplate.content).toContain("import './App.css'");
   });
 
-  it('should define routes', () => {
-    expect(appTsxTemplate.content).toContain('<Route path="/" element={<Home />} />');
-    expect(appTsxTemplate.content).toContain('<Route path="/about" element={<About />} />');
+  it('should use Layout component', () => {
+    expect(appTsxTemplate.content).toContain('<Layout>');
+    expect(appTsxTemplate.content).toContain('</Layout>');
   });
 
-  it('should use counter store in Home component', () => {
-    expect(appTsxTemplate.content).toContain('const { count, increment, decrement } = useCounterStore()');
+  it('should use AppRoutes component', () => {
+    expect(appTsxTemplate.content).toContain('<AppRoutes />');
+  });
+
+  it('should export default App', () => {
+    expect(appTsxTemplate.content).toContain('export default App');
   });
 });
 

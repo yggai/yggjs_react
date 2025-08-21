@@ -10,7 +10,13 @@ import {
   counterStoreTemplate,
   indexCssTemplate,
   appCssTemplate,
-  npmrcTemplate
+  npmrcTemplate,
+  homePageTemplate,
+  aboutPageTemplate,
+  pagesIndexTemplate,
+  routersIndexTemplate,
+  layoutComponentTemplate,
+  componentsIndexTemplate
 } from './files';
 
 /**
@@ -31,7 +37,16 @@ export const basicTemplate: Template = {
     appTsxTemplate,
     counterStoreTemplate,
     indexCssTemplate,
-    appCssTemplate
+    appCssTemplate,
+    // 页面组件
+    homePageTemplate,
+    aboutPageTemplate,
+    pagesIndexTemplate,
+    // 路由配置
+    routersIndexTemplate,
+    // 布局组件
+    layoutComponentTemplate,
+    componentsIndexTemplate
   ],
   dependencies: {
     react: '^18.3.1',

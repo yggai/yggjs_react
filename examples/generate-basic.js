@@ -1,16 +1,14 @@
-const { basicTemplate } = require('../dist/basic/index.js');
-const { TemplateGenerator } = require('../dist/basic/index.js');
+const { TemplateGenerator } = require('../dist/basic/generator');
+const { basicTemplate } = require('../dist/basic/templates');
 
-async function generateBasicExample() {
+async function generateBasic() {
   try {
-    console.log('🚀 正在生成basic示例项目...');
-    
-    await TemplateGenerator.createProject('basic', basicTemplate, './basic');
-    
-    console.log('✅ 示例项目生成完成！');
+    await TemplateGenerator.createProject('basic', basicTemplate, './examples/basic');
+    console.log('✅ Basic example generated successfully!');
   } catch (error) {
-    console.error('❌ 生成失败:', error.message);
+    console.error('❌ Error generating basic example:', error);
+    process.exit(1);
   }
 }
 
-generateBasicExample();
+generateBasic();

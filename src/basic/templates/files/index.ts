@@ -10,3 +10,5 @@ export { tsconfigTemplate, tsconfigNodeTemplate } from './typescript-configs';
 export { mainTsxTemplate, appTsxTemplate, counterStoreTemplate } from './react-files';
 export { indexCssTemplate, appCssTemplate } from './styles';
 export { npmrcTemplate } from './npmrc';
+export { homePageTemplate, aboutPageTemplate, pagesIndexTemplate } from './pages';
+export { routersIndexTemplate, layoutComponentTemplate, componentsIndexTemplate } from './routers';
